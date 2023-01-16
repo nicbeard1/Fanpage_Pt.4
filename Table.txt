@@ -1,0 +1,56 @@
+                <!-- table -->
+            <tbody>
+                <table class="table table-dark table-striped table-hover">
+                <thead>
+                <tr>
+                <th scope="col">name</th>
+                <th scope="col">rank</th>
+                <th scope="col">theme</th>
+                </tr>
+                </thead>
+                    <tbody>
+
+                            <?php
+                                function getDBConnection() {
+                                    // get connection to local MySQL database
+                                    $servername = "localhost";
+                                    $username = "root";
+                                    $password = "";
+                                    $dbname = "nicb";
+
+                                    // Create connection
+                                    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+                                    // Check connection
+                                    if (!$conn) {
+                                      die("Connection failed: " . mysqli_connect_error());
+                                    }
+                                    return $conn;
+                                }
+
+                                function getData() {
+                                    $conn = getDBConnection();
+                                    $sql = "SELECT * FROM characterthemes ";
+// WHERE name=
+                                    $result = mysqli_query($conn,$sql);
+
+                                    if (mysqli_num_rows($result) > 0) {    
+                                            while($row = mysqli_fetch_array($result)) {
+                                                echo "<tr> ";
+                                                echo " <td>" . $row["name"] . "</td>";
+                                                echo " <td>" . $row["rank"] . "</td>";
+                                                echo " <td>" . $row["theme"] . "</td>";
+                                                echo "</tr>\n";       // Add a newline at the end
+                                            }
+                                        } else {
+                                            echo "0 results";
+                                        }
+                                    mysqli_close($conn);    // remember to close db connection
+                                }
+
+                                getData()
+                            ?>
+                          </tbody>
+                        </table>
+                      </tbody>
+        </section>
